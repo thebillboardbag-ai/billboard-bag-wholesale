@@ -143,6 +143,20 @@
     line-height: 1.45;
   }
 
+  .field-error {
+    color: var(--accent);
+    font-size: 12.5px;
+    margin-top: 6px;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  .field-error[hidden] { display: none !important; }
+
+  #email.invalid {
+    border-color: var(--accent);
+  }
+
   input[type="text"],
   input[type="email"],
   input[type="tel"],
@@ -300,6 +314,7 @@
         <div>
           <label for="email">Work Email <span class="req">*</span></label>
           <input type="email" id="email" name="Work Email" placeholder="you@company.com" required>
+          <p class="field-error" id="email-error" hidden>Please use your business email address, not a personal email provider.</p>
         </div>
         <div>
           <label for="phone">Phone Number</label>
@@ -311,24 +326,24 @@
         <label for="units">Number of Units Interested In <span class="req">*</span></label>
         <select id="units" name="Units Interested" required>
           <option value="" disabled selected>Select a range</option>
-          <option value="25-99">25–99</option>
+          <option value="50-99">50–99</option>
           <option value="100-249">100–249</option>
           <option value="250-499">250–499</option>
           <option value="500-999">500–999</option>
           <option value="1000+">1,000+</option>
           <option value="Not sure yet">Not sure yet</option>
         </select>
+        <p class="hint">Wholesale orders start at 50 units.</p>
       </div>
 
       <div class="field">
         <label for="timeline">Target Timeline</label>
         <select id="timeline" name="Timeline">
           <option value="" disabled selected>Select a timeframe</option>
+          <option value="Within 14 days">Within 14 days</option>
           <option value="Within 30 days">Within 30 days</option>
-          <option value="1-3 months">1–3 months</option>
-          <option value="3-6 months">3–6 months</option>
-          <option value="6+ months">6+ months</option>
-          <option value="Just researching">Just researching</option>
+          <option value="Within 60 days">Within 60 days</option>
+          <option value="Within 3 months">Within 3 months</option>
         </select>
       </div>
 
@@ -360,6 +375,43 @@
 </div>
 
 <script>
+  (function () {
+    var emailInput = document.getElementById('email');
+    var emailError = document.getElementById('email-error');
+
+    var FREE_DOMAINS = [
+      'gmail.com', 'yahoo.com', 'hotmail.com', 'outlook.com', 'icloud.com',
+      'aol.com', 'live.com', 'msn.com', 'me.com', 'mail.com', 'protonmail.com',
+      'proton.me', 'yandex.com', 'gmx.com', 'comcast.net', 'verizon.net', 'att.net'
+    ];
+
+    function isFreeDomain(email) {
+      var parts = email.trim().toLowerCase().split('@');
+      if (parts.length !== 2) return false;
+      return FREE_DOMAINS.indexOf(parts[1]) !== -1;
+    }
+
+    function validateEmail() {
+      var invalid = isFreeDomain(emailInput.value);
+      emailError.hidden = !invalid;
+      emailInput.classList.toggle('invalid', invalid);
+      return !invalid;
+    }
+
+    emailInput.addEventListener('blur', validateEmail);
+    emailInput.addEventListener('input', function () {
+      if (!emailError.hidden) validateEmail();
+    });
+
+    document.getElementById('wholesale-form').addEventListener('submit', function (e) {
+      if (!validateEmail()) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        emailInput.focus();
+      }
+    }, true);
+  })();
+
   (function () {
     var form = document.getElementById('wholesale-form');
     var submitBtn = document.getElementById('submit-btn');
