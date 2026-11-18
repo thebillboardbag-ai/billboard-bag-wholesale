@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Billboard Bag — Wholesale Inquiry</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --panel: #141416;
+    --panel-border: #232326;
+    --fg: #f5f5f3;
+    --muted: #9a9a9e;
+    --accent: #de0504;
+    --accent-dim: #8a0303;
+    --field-bg: #1a1a1d;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  body {
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    padding-block: 48px;
+    min-height: 100vh;
+  }
+
+  .wrap {
+    max-width: 560px;
+    margin: 0 auto;
+  }
+
+  .brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 36px;
+    text-align: center;
+  }
+
+  .badge {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    background: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(222,5,4,0.35);
+    overflow: hidden;
+  }
+
+  .badge img { width: 100%; height: 100%; object-fit: cover; }
+
+  .wordmark {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    line-height: 1;
+    text-transform: uppercase;
+  }
+
+  .wordmark sup {
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    vertical-align: super;
+  }
+
+  .tagline {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: 'Anton', sans-serif;
+    font-size: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 8px;
+    text-wrap: balance;
+    text-align: center;
+  }
+
+  .sub {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.55;
+    text-align: center;
+    margin: 0 0 32px;
+  }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 16px;
+    padding: 28px;
+  }
+
+  .field {
+    margin-bottom: 22px;
+  }
+
+  .field:last-of-type { margin-bottom: 0; }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 480px) {
+    .field-row { grid-template-columns: 1fr; }
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+
+  label .req { color: var(--accent); }
+
+  .hint {
+    color: var(--muted);
+    font-size: 12.5px;
+    margin-top: 6px;
+    line-height: 1.45;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="url"],
+  select,
+  textarea {
+    width: 100%;
+    background: var(--field-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: 14.5px;
+    transition: border-color 0.15s ease;
+  }
+
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239a9a9e' stroke-width='1.5' fill='none' fill-rule='evenodd'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+  }
+
+  textarea { resize: vertical; min-height: 92px; line-height: 1.5; }
+
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+
+  input::placeholder, textarea::placeholder { color: #5f5f63; }
+
+  button[type="submit"] {
+    width: 100%;
+    margin-top: 28px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 14.5px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+  }
+
+  button[type="submit"]:hover { background: #c40404; }
+  button[type="submit"]:active { transform: scale(0.99); }
+
+  button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  .footer-note {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    margin-top: 24px;
+    line-height: 1.5;
+  }
+
+  .error-note {
+    margin-top: 16px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    background: rgba(222,5,4,0.1);
+    border: 1px solid rgba(222,5,4,0.3);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+
+  .error-note[hidden] { display: none !important; }
+
+  .thanks {
+    text-align: center;
+    padding: 12px 0 4px;
+  }
+
+  .thanks-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    background: rgba(222,5,4,0.12);
+    border: 1px solid rgba(222,5,4,0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .thanks-icon svg { width: 26px; height: 26px; }
+
+  .thanks h2 {
+    font-family: 'Anton', sans-serif;
+    font-size: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin: 0 0 10px;
+  }
+
+  .thanks p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <div class="badge">
+      <img src="assets/logo-badge.png" alt="Billboard Bag">
+    </div>
+    <div class="wordmark">Billboard Bag<sup>&trade;</sup></div>
+    <div class="tagline">Wholesale &amp; Corporate Orders</div>
+  </div>
+
+  <h1>Wholesale Inquiry</h1>
+  <p class="sub">Tell us about your organization and order needs, and a member of our team will follow up with pricing and next steps.</p>
+
+  <div class="card">
+    <form id="wholesale-form" action="https://formspree.io/f/myeweryy" method="POST">
+
+      <input type="hidden" name="_subject" value="New Billboard Bag Wholesale Inquiry">
+      <input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off">
+
+      <div class="field">
+        <label for="company">Company Name <span class="req">*</span></label>
+        <input type="text" id="company" name="Company Name" placeholder="Acme Corporation" required>
+      </div>
+
+      <div class="field field-row">
+        <div>
+          <label for="name">Contact Name <span class="req">*</span></label>
+          <input type="text" id="name" name="Contact Name" placeholder="Jordan Reese" required>
+        </div>
+        <div>
+          <label for="title">Title / Role <span class="req">*</span></label>
+          <input type="text" id="title" name="Title" placeholder="Procurement Manager" required>
+        </div>
+      </div>
+
+      <div class="field field-row">
+        <div>
+          <label for="email">Work Email <span class="req">*</span></label>
+          <input type="email" id="email" name="Work Email" placeholder="you@company.com" required>
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="Phone Number" placeholder="(555) 555-5555">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="units">Number of Units Interested In <span class="req">*</span></label>
+        <select id="units" name="Units Interested" required>
+          <option value="" disabled selected>Select a range</option>
+          <option value="25-99">25–99</option>
+          <option value="100-249">100–249</option>
+          <option value="250-499">250–499</option>
+          <option value="500-999">500–999</option>
+          <option value="1000+">1,000+</option>
+          <option value="Not sure yet">Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="timeline">Target Timeline</label>
+        <select id="timeline" name="Timeline">
+          <option value="" disabled selected>Select a timeframe</option>
+          <option value="Within 30 days">Within 30 days</option>
+          <option value="1-3 months">1–3 months</option>
+          <option value="3-6 months">3–6 months</option>
+          <option value="6+ months">6+ months</option>
+          <option value="Just researching">Just researching</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="notes">Additional Details</label>
+        <textarea id="notes" name="Additional Details" placeholder="Use case, branding requirements, event or rollout date, or anything else we should know."></textarea>
+      </div>
+
+      <button type="submit" id="submit-btn">Submit Inquiry</button>
+
+      <p class="error-note" id="error-note" hidden>
+        Your submission didn't go through. Please try again, or email your details to <strong>thebillboardbag@gmail.com</strong>.
+      </p>
+    </form>
+
+    <div class="thanks" id="thanks-panel" hidden>
+      <div class="thanks-icon">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5 13l4 4L19 7" stroke="#de0504" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h2>Inquiry Received</h2>
+      <p>Thank you for your interest in Billboard Bag. A member of our team will review your request and follow up at the email address you provided.</p>
+    </div>
+  </div>
+
+  <p class="footer-note" id="footer-note">Questions? Email thebillboardbag@gmail.com.</p>
+
+</div>
+
+<script>
+  (function () {
+    var form = document.getElementById('wholesale-form');
+    var submitBtn = document.getElementById('submit-btn');
+    var errorNote = document.getElementById('error-note');
+    var thanksPanel = document.getElementById('thanks-panel');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      errorNote.hidden = true;
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Submitting…';
+
+      fetch(form.action, {
+        method: 'POST',
+        body: new FormData(form),
+        headers: { 'Accept': 'application/json' }
+      }).then(function (response) {
+        if (response.ok) {
+          form.hidden = true;
+          thanksPanel.hidden = false;
+        } else {
+          throw new Error('Submission failed');
+        }
+      }).catch(function () {
+        errorNote.hidden = false;
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit Inquiry';
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
