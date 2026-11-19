@@ -337,6 +337,24 @@
       </div>
 
       <div class="field">
+        <label for="model">Which Model(s)? <span class="req">*</span></label>
+        <select id="model" name="Model(s)" required>
+          <option value="" disabled selected>Select a model</option>
+          <option value="Black OG">Black OG</option>
+          <option value="Red Eye">Red Eye</option>
+          <option value="Noir Luxe">Noir Luxe</option>
+          <option value="Mix of models">Mix of models</option>
+          <option value="Not sure yet">Not sure yet</option>
+        </select>
+      </div>
+
+      <div class="field" id="blackcard-field" hidden>
+        <label for="blackcard">Black Card Link</label>
+        <input type="text" id="blackcard" name="Black Card Link" placeholder="e.g. instagram.com/yourhandle">
+        <p class="hint">Noir Luxe comes with a Black Card. Drop a link here only if it should go somewhere different than your LED display's social handle, otherwise it'll link to the same place.</p>
+      </div>
+
+      <div class="field">
         <label for="timeline">Target Timeline</label>
         <select id="timeline" name="Timeline">
           <option value="" disabled selected>Select a timeframe</option>
@@ -407,6 +425,15 @@
     emailInput.addEventListener('input', function () {
       if (!emailError.hidden) validateEmail();
     });
+
+    var modelSelect = document.getElementById('model');
+    var blackcardField = document.getElementById('blackcard-field');
+    function toggleBlackcard() {
+      var v = modelSelect.value;
+      blackcardField.hidden = !(v === 'Noir Luxe' || v === 'Mix of models');
+    }
+    modelSelect.addEventListener('change', toggleBlackcard);
+    toggleBlackcard();
 
     document.getElementById('wholesale-form').addEventListener('submit', function (e) {
       if (!validateEmail()) {
